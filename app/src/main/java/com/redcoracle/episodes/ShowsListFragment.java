@@ -210,7 +210,9 @@ public class ShowsListFragment
 					ShowsTable.COLUMN_NAME,
 					ShowsTable.COLUMN_STARRED,
 					ShowsTable.COLUMN_ARCHIVED,
-					ShowsTable.COLUMN_BANNER_PATH
+					ShowsTable.COLUMN_BANNER_PATH,
+					ShowsTable.COLUMN_FANART_PATH,
+					ShowsTable.COLUMN_POSTER_PATH,
 			};
 			return new CursorLoader(getActivity(),
 					ShowsProvider.CONTENT_URI_SHOWS,
@@ -439,16 +441,33 @@ public class ShowsListFragment
 			final String name = showsCursor.getString(nameColumnIndex);
 			nameView.setText(name);
 
-			final ImageView bannerView = convertView.findViewById(R.id.banner_view);
-			final int bannerPathColumnIndex = showsCursor.getColumnIndexOrThrow(ShowsTable.COLUMN_BANNER_PATH);
+			final int bannerPathColumnIndex = showsCursor.getColumnIndex(ShowsTable.COLUMN_BANNER_PATH);
+			final int fanartPathColumnIndex = showsCursor.getColumnIndex(ShowsTable.COLUMN_FANART_PATH);
+			final int posterPathColumnIndex = showsCursor.getColumnIndex(ShowsTable.COLUMN_POSTER_PATH);
 			final String bannerPath = showsCursor.getString(bannerPathColumnIndex);
+			final String fanartPath = showsCursor.getString(fanartPathColumnIndex);
+			final String posterPath = showsCursor.getString(posterPathColumnIndex);
+			final String artPath;
+
+			if (bannerPath != null && !bannerPath.equals("")) {
+				artPath = bannerPath;
+			} else if (fanartPath != null && !fanartPath.equals("")) {
+				artPath = fanartPath;
+			} else if (posterPath != null && !posterPath.equals("")) {
+				artPath = posterPath;
+			} else {
+				artPath = null;
+			}
+
+			final ImageView bannerView = convertView.findViewById(R.id.banner_view);
 
 			bannerView.setImageResource(R.drawable.blank_show_banner);
-			if (bannerPath != null && !bannerPath.equals("")) {
-				final String bannerUrl = String.format("https://artworks.thetvdb.com/banners/%s", bannerPath);
+			if (artPath != null) {
+				final String artUrl = String.format("https://artworks.thetvdb.com/banners/%s", artPath);
 
 				Glide.with(convertView)
-						.load(bannerUrl)
+						.load(artUrl)
+						.centerCrop()
 						.diskCacheStrategy(DiskCacheStrategy.RESOURCE)
 						.placeholder(R.drawable.blank_show_banner)
 						.into(bannerView);
