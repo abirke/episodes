@@ -467,7 +467,6 @@ public class ShowsListFragment
 
 				Glide.with(convertView)
 						.load(artUrl)
-						.centerCrop()
 						.diskCacheStrategy(DiskCacheStrategy.RESOURCE)
 						.placeholder(R.drawable.blank_show_banner)
 						.into(bannerView);
