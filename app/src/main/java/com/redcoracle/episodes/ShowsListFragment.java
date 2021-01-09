@@ -442,20 +442,28 @@ public class ShowsListFragment
 			final String name = showsCursor.getString(nameColumnIndex);
 			nameView.setText(name);
 
+			SharedPreferences prefs = Preferences.getSharedPreferences();
+			boolean bannerFallback = prefs.getBoolean("pref_banner_fallback", false);
+
 			final int bannerPathColumnIndex = showsCursor.getColumnIndex(ShowsTable.COLUMN_BANNER_PATH);
-			final int fanartPathColumnIndex = showsCursor.getColumnIndex(ShowsTable.COLUMN_FANART_PATH);
-			final int posterPathColumnIndex = showsCursor.getColumnIndex(ShowsTable.COLUMN_POSTER_PATH);
 			final String bannerPath = showsCursor.getString(bannerPathColumnIndex);
-			final String fanartPath = showsCursor.getString(fanartPathColumnIndex);
-			final String posterPath = showsCursor.getString(posterPathColumnIndex);
 			final String artPath;
 
 			if (bannerPath != null && !bannerPath.equals("")) {
 				artPath = bannerPath;
-			} else if (fanartPath != null && !fanartPath.equals("")) {
-				artPath = fanartPath;
-			} else if (posterPath != null && !posterPath.equals("")) {
-				artPath = posterPath;
+			} else if (bannerFallback) {
+				final int fanartPathColumnIndex = showsCursor.getColumnIndex(ShowsTable.COLUMN_FANART_PATH);
+				final int posterPathColumnIndex = showsCursor.getColumnIndex(ShowsTable.COLUMN_POSTER_PATH);
+				final String fanartPath = showsCursor.getString(fanartPathColumnIndex);
+				final String posterPath = showsCursor.getString(posterPathColumnIndex);
+
+				if (fanartPath != null && !fanartPath.equals("")) {
+					artPath = fanartPath;
+				} else if (posterPath != null && !posterPath.equals("")) {
+					artPath = posterPath;
+				} else {
+					artPath = null;
+				}
 			} else {
 				artPath = null;
 			}

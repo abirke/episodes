@@ -41,6 +41,8 @@
   <string name="pref_language_title">Language</string>
   <string name="pref_reverse_sort_order">Reverse sorting order</string>
   <string name="pref_reverse_sort_order_summary">Displays the newest season first</string>
+  <string name="pref_banner_fallback">Banner fallback</string>
+  <string name="pref_banner_fallback_summary">If no banner available, show poster instead of title</string>
   <string name="restore_dialog_no_backups_message">No backups found in \'%s\' folder.</string>
   <string name="restore_dialog_title">Restore from backup</string>
   <string name="restore_error_message">Could not restore library</string>
