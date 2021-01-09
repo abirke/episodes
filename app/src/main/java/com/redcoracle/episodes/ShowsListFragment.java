@@ -54,6 +54,7 @@ import com.redcoracle.episodes.db.ShowsProvider;
 import com.redcoracle.episodes.db.ShowsTable;
 import com.redcoracle.episodes.services.AsyncTask;
 import com.redcoracle.episodes.services.RefreshAllShowsTask;
+import com.redcoracle.episodes.tvdb.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -463,7 +464,7 @@ public class ShowsListFragment
 
 			bannerView.setImageResource(R.drawable.blank_show_banner);
 			if (artPath != null) {
-				final String artUrl = String.format("https://artworks.thetvdb.com/banners/%s", artPath);
+				final String artUrl = String.format(Constants.TVDB_URL_FORMATTER_ARTWORKS, artPath);
 
 				Glide.with(convertView)
 						.load(artUrl)

@@ -55,6 +55,7 @@ import com.redcoracle.episodes.db.ShowsTable;
 import com.redcoracle.episodes.services.AsyncTask;
 import com.redcoracle.episodes.services.DeleteShowTask;
 import com.redcoracle.episodes.services.RefreshShowTask;
+import com.redcoracle.episodes.tvdb.Constants;
 
 public class ShowActivity
 	extends AppCompatActivity
@@ -252,7 +253,7 @@ public class ShowActivity
 				placeholder.setCenterRadius(60f);
 
 				placeholder.start();
-				final String artUrl = String.format("https://artworks.thetvdb.com/banners/%s", artPath);
+				final String artUrl = String.format(Constants.TVDB_URL_FORMATTER_ARTWORKS, artPath);
 
 				Glide.with(this)
 						.load(artUrl)
